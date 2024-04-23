@@ -2,9 +2,10 @@
 #define ll long long int
 using namespace std;
 vector<ll>p;
+int mx=1<<15;
 void palindrome()
 {
-    int mx=1<<15;
+    
     for(int i=0;i<mx;i++)
     {
         string s=to_string(i);
@@ -17,46 +18,37 @@ void palindrome()
         
     }
 }
+
+
+
+
 int main()
 {
     palindrome();
+
     int t;
     cin>>t;
     while(t--)
     {
         int n;
         cin>>n;
-        map<ll,ll>mp;
-        vector<ll>a(n);
+        vector<int>cunt(mx),a;
         for(int i=0;i<n;i++)
         {
-            cin>>a[i];
-            mp[a[i]]++;
+            int x;
+            cin>>x;
+            cunt[x]++;
+            a.push_back(x);
         }
-        
-        ll ans=0;
+        ll ans=n;
         for(int i=0;i<n;i++)
         {
-            for(int j=0;j<p.size();j++)
+            for(int k=0;k<p.size();k++)
             {
-                if((a[i]^p[j])<=a[i])
-                {
-                    continue;
-                }
-                if(mp.find(a[i]^p[j])!=mp.end())
-                {
-                    ans+=mp[a[i]^p[j]];
-                }
+                int curr=(a[i]^p[k]);
+                ans+=cunt[curr];
             }
         }
-
-        for(auto it:mp)
-        {
-            ans+=((long long )it.second*(it.second+1))/2;
-        }
-        
-        cout<<ans<<endl;
+        cout<<ans/2<<endl;
     }
-
-    return 0;
 }
